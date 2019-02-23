@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_lstiter.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/18 18:05:59 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/21 00:11:48 by fprevela         ###   ########.fr       */
+/*   Created: 2019/02/21 19:05:27 by fprevela          #+#    #+#             */
+/*   Updated: 2019/02/22 18:14:05 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr(int n)
+void		ft_lstiter(t_list *lst, void (*f)(t_list *elem))
 {
-	char	*c;
-
-	c = ft_itoa(n);
-	ft_putstr(c);
+	while (lst != NULL)
+	{
+		f(lst);
+		lst = lst->next;
+	}
 	return ;
 }

@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnbr.c                                        :+:      :+:    :+:   */
+/*   ft_lstdel.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/18 18:05:59 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/21 00:11:48 by fprevela         ###   ########.fr       */
+/*   Created: 2019/02/21 14:58:16 by fprevela          #+#    #+#             */
+/*   Updated: 2019/02/22 17:48:44 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void	ft_putnbr(int n)
+void		ft_lstdel(t_list **alst, void (*del)(void*, size_t))
 {
-	char	*c;
+	t_list	*wait;
 
-	c = ft_itoa(n);
-	ft_putstr(c);
+	while (alst && *alst)
+	{
+		wait = (*alst)->next;
+		del((*alst)->content, (*alst)->content_size);
+		free(*alst);
+		*alst = wait;
+	}
 	return ;
 }

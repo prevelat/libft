@@ -6,89 +6,99 @@
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 16:29:07 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/20 22:55:34 by fprevela         ###   ########.fr       */
+/*   Updated: 2019/02/22 17:46:08 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		get_n(char const *s, char c)
-{
-	int		n;
-	int		i;
-
-	n = 0;
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (s[i] != c)
-			n++;
-		i++;
-	}
-	return (n);
-}
-
-static int		get_z(const char *s, char c)
-{
-	int		z;
-	int		i;
-
-	z = 0;
-	i = 0;
-	while (s[i] != '\0')
-	{
-		if (i > 0 && s[i] != c && s[i - 1] == c)
-			z++;
-		i++;
-	}
-	return (z);
-}
-
-static void			print_arr(char **arr, char const *s, char c)
+static int		full(char const *s, char c)
 {
 	int		i;
 	int		j;
-	int		x;
+	int		k;
 
-	i = -1;
+	i = 0;
 	j = 0;
-	x = 0;
-	while (s[x] != '\0')
+	k = 0;
+	while (s[i] != '\0')
 	{
-		if (s[x] == c)
-			x++;
-		if (x > 0 && s[x - 1] == c && s[x] != c)
-			i++;
-		if (s[x] != c)
-		{
-			arr[i][j] = s[x];
+		if (s[i] != c && s[i - 1] == c)
+			k++;
+		if (s[i] != c)
 			j++;
-			x++;
-		}
-		if (s[x] == c && s[x - 1] != c)
-		{
-			arr[i][j] = '\0';
-			j = 0;
-		}
+		i++;
 	}
-	i++;
-	arr[i][j] = 0;
-	return ;
+	i = j + k;
+	return (i);
+}
+
+static int		len(char const *s, char c, int i)
+{
+	int		len;
+
+	len = 0;
+	while (s[i] != c)
+	{
+		len++;
+		i++;
+	}
+	return (len);
+}
+
+static int		str(char *str, char const *s, char c, int i)
+{
+	int		j;
+
+	j = 0;
+	while (s[i] != c)
+	{
+		str[j] = s[i];
+		j++;
+		i++;
+	}
+	i--;
+	str[j] = '\0';
+	return (i);
+}
+
+static int		end_arr(char **arr, int a)
+{
+	arr[a] = (char*)malloc(sizeof(char));
+	if (arr[a] == NULL)
+	{
+		free(arr);
+		return (1);
+	}
+	arr[a][0] = '\0';
+	return (0);
 }
 
 char			**ft_strsplit(char const *s, char c)
 {
 	char	**arr;
-	int		n;
-	int		z;
 	int		i;
-	
+	int		a;
+
 	i = 0;
-	n = get_n(s, c);
-	z = get_z(s, c);
-	arr = (char**)malloc((sizeof(char) * (n + z)) + 1 );
-	if (arr == NULL)
+	a = 0;
+	if ((arr = (char**)malloc((sizeof(char*) * full(s, c)) + 1)) == NULL)
 		return (NULL);
-	print_arr(arr, s, c);
+	while (s[i++] != '\0')
+	{
+		if (s[i] != c && s[i - 1] == c)
+		{
+			if ((arr[a] = (char*)malloc((sizeof(char) * len(s, c, i)) + 1))
+					== NULL)
+			{
+				free(arr);
+				return (NULL);
+			}
+			i = str(arr[a], s, c, i);
+			a++;
+		}
+	}
+	if ((end_arr(arr, a)) == 1)
+		return (NULL);
 	return (arr);
 }
