@@ -6,7 +6,7 @@
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 22:03:56 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/24 20:54:00 by fprevela         ###   ########.fr       */
+/*   Updated: 2019/02/24 21:17:47 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char		**m_all(char **arr, char const *s, char c)
 
 	i = 0;
 	x = 0;
-	if (!(arr = (char **)malloc(sizeof(char*) * size(s, c) + 1)))
+	if (!(arr = (char **)malloc(size(s, c) + 22)))
 		return (NULL);
 	while (s[i] != '\0')
 	{
@@ -65,6 +65,7 @@ static char		**m_all(char **arr, char const *s, char c)
 		}
 		i++;
 	}
+	arr[x] = NULL;
 	return (arr);
 }
 
@@ -93,6 +94,5 @@ char			**ft_strsplit(char const *s, char c)
 		}
 		i++;
 	}
-	arr[x] = NULL;
 	return (arr);
 }
