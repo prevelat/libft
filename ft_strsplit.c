@@ -6,7 +6,7 @@
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/22 22:03:56 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/24 22:31:48 by fprevela         ###   ########.fr       */
+/*   Updated: 2019/02/24 22:47:30 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char		**m_all(char **arr, char const *s, char c)
 
 	i = 0;
 	x = 0;
-	if (!(arr = (char **)malloc(sizeof(char **) * words(s, c) + 8)))
+	if (!(arr = (char **)malloc(sizeof(char *) * words(s, c) + 8)))
 		return (NULL);
 	while (s[i] != '\0')
 	{
