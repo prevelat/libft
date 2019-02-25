@@ -6,7 +6,7 @@
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 17:20:36 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/18 22:23:37 by fprevela         ###   ########.fr       */
+/*   Updated: 2019/02/23 14:13:25 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ char		*ft_itoa(int n)
 
 	i = (long)n;
 	j = findsize(n);
-	a = (char*)malloc((sizeof(char) * j) + 1);
+	if (!(a = (char*)malloc((sizeof(char) * j) + 1)))
+		return (NULL);
 	z = 0;
 	if (i < 0)
 	{

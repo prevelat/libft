@@ -6,7 +6,7 @@
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 17:50:06 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/18 21:35:26 by fprevela         ###   ########.fr       */
+/*   Updated: 2019/02/23 15:28:36 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_putendl(char const *s)
 {
+	if (!s)
+		return ;
 	ft_putstr(s);
 	write(1, "\n", 1);
 	return ;

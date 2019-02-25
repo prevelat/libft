@@ -1,22 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_get_st_str.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 23:31:52 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/23 15:28:11 by fprevela         ###   ########.fr       */
+/*   Created: 2019/02/23 19:27:07 by fprevela          #+#    #+#             */
+/*   Updated: 2019/02/23 19:38:25 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_putendl_fd(char const *s, int fd)
+char			*ft_get_st_str(char *s, char c)
 {
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
-	write(fd, "\n", 1);
-	return ;
+	char		*str;
+	size_t		i;
+	size_t		j;
+	size_t		len;
+
+	i = -1;
+	j = 0;
+	len = 0;
+	while (s[i++] != c)
+		len++;
+	if (!(str = (char *)malloc((sizeof(char) * len) + 1)))
+		return (NULL);
+	i = 0;
+	while (s[i] != c)
+		str[j++] = s[i++];
+	str[j] = '\0';
+	return (str);
 }

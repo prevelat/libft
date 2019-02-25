@@ -6,7 +6,7 @@
 #    By: fprevela <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/02/17 18:48:13 by fprevela          #+#    #+#              #
-#    Updated: 2019/02/22 18:11:17 by fprevela         ###   ########.fr        #
+#    Updated: 2019/02/24 15:45:57 by fprevela         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ SRC = ft_atoi.c ft_bzero.c ft_isalnum.c ft_isalpha.c \
 	  ft_strmapi.c ft_strncat.c ft_strncmp.c ft_strncpy.c \
 	  ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c \
 	  ft_strrev.c ft_strsplit.c ft_strstr.c ft_strsub.c \
-	  ft_strtrim.c ft_tolower.c ft_toupper.c \
+	  ft_strtrim.c ft_tolower.c ft_toupper.c ft_free_arr.c \
+	  ft_get_st_str.c \
 	  
 OBJ = *.o
 

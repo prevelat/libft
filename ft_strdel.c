@@ -6,7 +6,7 @@
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/17 21:15:19 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/18 21:37:01 by fprevela         ###   ########.fr       */
+/*   Updated: 2019/02/22 19:44:09 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_strdel(char **as)
 {
+	if (as == NULL || *as == NULL)
+		return ;
 	free(*as);
 	*as = NULL;
 	return ;

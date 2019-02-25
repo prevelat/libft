@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   ft_free_arr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/20 23:31:52 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/23 15:28:11 by fprevela         ###   ########.fr       */
+/*   Created: 2019/02/23 19:36:03 by fprevela          #+#    #+#             */
+/*   Updated: 2019/02/23 19:57:44 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-void		ft_putendl_fd(char const *s, int fd)
+char		**ft_free_arr(char **arr)
 {
-	if (!s)
-		return ;
-	write(fd, s, ft_strlen(s));
-	write(fd, "\n", 1);
-	return ;
+	size_t		i;
+
+	i = 0;
+	while (*arr[i])
+	{
+		free(arr[i]);
+		arr[i] = NULL;
+		i++;
+	}
+	free(arr);
+	return (NULL);
 }

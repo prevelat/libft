@@ -6,7 +6,7 @@
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/18 11:26:05 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/18 21:37:41 by fprevela         ###   ########.fr       */
+/*   Updated: 2019/02/23 01:34:13 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 	unsigned int		end;
 	int					i;
 
+	if (s == NULL)
+		return (NULL);
 	a = (char*)malloc((sizeof(char) * len) + 1);
 	if (a == NULL)
 		return (NULL);
@@ -29,5 +31,6 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 		start++;
 		i++;
 	}
+	a[i] = '\0';
 	return (a);
 }

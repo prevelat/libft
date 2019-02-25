@@ -5,40 +5,38 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/18 16:29:07 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/22 17:46:08 by fprevela         ###   ########.fr       */
+/*   Created: 2019/02/22 22:03:56 by fprevela          #+#    #+#             */
+/*   Updated: 2019/02/24 16:57:54 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int		full(char const *s, char c)
+static size_t	size(char const *s, char c)
 {
-	int		i;
-	int		j;
-	int		k;
+	size_t		i;
+	size_t		n;
 
 	i = 0;
-	j = 0;
-	k = 0;
+	n = 0;
 	while (s[i] != '\0')
 	{
-		if (s[i] != c && s[i - 1] == c)
-			k++;
 		if (s[i] != c)
-			j++;
+			n++;
+		if (s[i] != c && (i == 0 || (i > 0 && s[i - 1] == c)))
+			n++;
 		i++;
 	}
-	i = j + k;
-	return (i);
+	n++;
+	return (n);
 }
 
-static int		len(char const *s, char c, int i)
+static size_t	len(char const *s, char c, size_t i)
 {
-	int		len;
+	size_t		len;
 
 	len = 0;
-	while (s[i] != c)
+	while (s[i] != c && s[i] != '\0')
 	{
 		len++;
 		i++;
@@ -46,59 +44,57 @@ static int		len(char const *s, char c, int i)
 	return (len);
 }
 
-static int		str(char *str, char const *s, char c, int i)
+static char		**m_all(char **arr, char const *s, char c)
 {
-	int		j;
+	size_t		i;
+	size_t		x;
 
-	j = 0;
-	while (s[i] != c)
-	{
-		str[j] = s[i];
-		j++;
-		i++;
-	}
+	i = -1;
+	x = 0;
+	if (!(arr = ft_memalloc(size(s, c))))
+		return (NULL);
+	while (s[i++])
+		if ((i == 0 && s[i] != c) ||
+				(i > 0 && s[i - 1] == c && s[i] != c && s[i] != '\0'))
+		{
+			if (!(arr[x] = ft_memalloc(len(s, c, i) + 1)))
+				break ;
+			i = i + len(s, c, i);
+			x++;
+		}
 	i--;
-	str[j] = '\0';
-	return (i);
-}
-
-static int		end_arr(char **arr, int a)
-{
-	arr[a] = (char*)malloc(sizeof(char));
-	if (arr[a] == NULL)
+	if (s[i] != '\0')
 	{
-		free(arr);
-		return (1);
+		arr = ft_free_arr(arr);
+		return (NULL);
 	}
-	arr[a][0] = '\0';
-	return (0);
+	if (!(arr[x] = ft_memalloc(sizeof(char))))
+		arr = ft_free_arr(arr);
+	return (arr);
 }
 
 char			**ft_strsplit(char const *s, char c)
 {
-	char	**arr;
-	int		i;
-	int		a;
+	char		**arr;
+	size_t		i;
+	size_t		x;
 
-	i = 0;
-	a = 0;
-	if ((arr = (char**)malloc((sizeof(char*) * full(s, c)) + 1)) == NULL)
+	if (!s)
 		return (NULL);
-	while (s[i++] != '\0')
-	{
-		if (s[i] != c && s[i - 1] == c)
+	arr = NULL;
+	arr = m_all(arr, s, c);
+	if (!arr)
+		return (NULL);
+	i = -1;
+	x = 0;
+	while (s[i++])
+		if ((i == 0 && s[i] != c) ||
+				(i > 0 && s[i - 1] == c && s[i] != c && s[i] != '\0'))
 		{
-			if ((arr[a] = (char*)malloc((sizeof(char) * len(s, c, i)) + 1))
-					== NULL)
-			{
-				free(arr);
-				return (NULL);
-			}
-			i = str(arr[a], s, c, i);
-			a++;
+			arr[x] = ft_get_st_str((char *)&s[i], c);
+			i = i + len(s, c, i);
+			x++;
 		}
-	}
-	if ((end_arr(arr, a)) == 1)
-		return (NULL);
+	arr[x] = NULL;
 	return (arr);
 }
