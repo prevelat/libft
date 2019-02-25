@@ -6,7 +6,7 @@
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 18:31:34 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/23 20:02:32 by fprevela         ###   ########.fr       */
+/*   Updated: 2019/02/24 22:32:36 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,5 @@ void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem));
 char				*ft_strrev(char *str);
 char				**ft_free_arr(char **arr);
-char				*ft_get_st_str(char *s, char c);
 
 #endif
