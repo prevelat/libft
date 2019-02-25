@@ -5,89 +5,122 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fprevela <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/24 21:32:51 by fprevela          #+#    #+#             */
-/*   Updated: 2019/02/24 21:33:39 by fprevela         ###   ########.fr       */
+/*   Created: 2019/02/22 22:03:56 by fprevela          #+#    #+#             */
+/*   Updated: 2019/02/24 22:31:48 by fprevela         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static void		cpy(char *dest, char *src, size_t n)
+static size_t	words(char const *s, char c)
 {
 	size_t		i;
+	size_t		n;
 
 	i = 0;
-	while (i < n)
+	n = 0;
+	while (s[i] != '\0')
 	{
-		dest[i] = src[i];
+		if (s[i] != c && (i == 0 || (i > 0 && s[i - 1] == c)))
+			n++;
 		i++;
 	}
-	dest[i] = '\0';
+	return (n);
 }
 
-static size_t	count_words(const char *str, char c)
+static int		len(char const *s, char c, int i)
+{
+	size_t		len;
+
+	len = 0;
+	while (s[i] != c && s[i] != '\0')
+	{
+		len++;
+		i++;
+	}
+	return (len);
+}
+
+static char		**m_all(char **arr, char const *s, char c)
 {
 	size_t		i;
-	size_t		words;
+	size_t		x;
 
 	i = 0;
-	words = 0;
-	while (str[i])
+	x = 0;
+	if (!(arr = (char **)malloc(sizeof(char **) * words(s, c) + 8)))
+		return (NULL);
+	while (s[i] != '\0')
 	{
-		while (str[i] == c)
-			i++;
-		if (!str[i])
-			break ;
-		words++;
-		while (str[i] && str[i] != c)
-			i++;
+		if ((i == 0 && s[i] != c) ||
+				(i > 0 && s[i - 1] == c && s[i] != c && s[i] != '\0'))
+		{
+			if (!(arr[x] = (char *)malloc(sizeof(char) * len(s, c, i) + 1)))
+			{
+				ft_free_arr(arr);
+				return (NULL);
+			}
+			i = i + len(s, c, i) - 1;
+			x++;
+		}
+		i++;
 	}
-	return (words);
+	return (arr);
 }
 
-static size_t	cut_words(const char *str, size_t words, char **r, char c)
+static char		*ft_get_st_str(char *s, char c)
 {
-	size_t		w;
-	size_t		start;
-	size_t		end;
+	char		*str;
+	size_t		i;
+	size_t		j;
+	size_t		len;
 
-	w = 0;
-	start = 0;
-	while (w < words && str[start])
+	i = 0;
+	j = 0;
+	len = 0;
+	while (s[i] && s[i] != c)
 	{
-		while (str[start] == c)
-			start++;
-		end = start;
-		while (str[end] && str[end] != c)
-			end++;
-		if (!(r[w] = malloc(end - start + 1)))
-			return (0);
-		cpy(r[w], (char *)str + start, end - start);
-		start = end + 1;
-		w++;
+		len++;
+		i++;
 	}
-	return (1);
+	if (!(str = (char *)malloc((sizeof(char) * len + 1))))
+		return (NULL);
+	i = 0;
+	while (s[i] && s[i] != c)
+	{
+		str[j] = s[i];
+		i++;
+		j++;
+	}
+	str[j] = '\0';
+	return (str);
 }
 
 char			**ft_strsplit(char const *s, char c)
 {
-	size_t		words;
-	char		**r;
+	char		**arr;
+	int			i;
+	size_t		x;
 
-	if (!s)
+	if (s == NULL)
 		return (NULL);
-	words = count_words(s, c);
-	if (!words)
+	arr = NULL;
+	arr = m_all(arr, s, c);
+	if (arr == NULL)
+		return (NULL);
+	i = 0;
+	x = 0;
+	while (s[i] != '\0')
 	{
-		if (!(r = malloc(sizeof(*r))))
-			return (NULL);
-		r[0] = NULL;
-		return (r);
+		if ((i == 0 && s[i] != c) ||
+				(i > 0 && s[i - 1] == c && s[i] != c && s[i] != '\0'))
+		{
+			arr[x] = ft_get_st_str((char *)&s[i], c);
+			i = i + len(s, c, i) - 1;
+			x++;
+		}
+		i++;
 	}
-	if (!(r = malloc((words + 1) * sizeof(*r))))
-		return (NULL);
-	if (!cut_words(s, words, r, c))
-		return (NULL);
-	r[words] = 0;
-	return (r);
+	arr[x] = NULL;
+	return (arr);
 }
